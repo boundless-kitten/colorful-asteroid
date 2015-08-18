@@ -16,7 +16,7 @@ var port = process.env.PORT || 3000;
 
 //sets the root directory to public
 app.use(express.static(__dirname + '/public'));
-
+ 
 
 // Connection string for our database
 var connectionString = process.env.DATABASE_URL || 'postgres://localhost:5432/postgres';
