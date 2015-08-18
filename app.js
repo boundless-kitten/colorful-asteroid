@@ -130,8 +130,12 @@ app.post('/api/reset', function(req, res){
 });
 
 // Describes the port we're listening on. Go to 'localhost:3000' in browser to serve locally
-var server = app.listen(port);
+// var server = app.listen(port);
 
+var server = app.listen(port, function() {
+  var host = server.address().address;
+  console.log('Strwpll app listening at http://%s:%s -- %s', host, port);
+});
 
 
 
