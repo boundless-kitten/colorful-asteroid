@@ -19,7 +19,8 @@ app.use(express.static(__dirname + '/public'));
  
 
 // Connection string for our database
-var connectionString = process.env.DATABASE_URL || 'mongodb://backlashUser:password@ds035563.mongolab.com:35563/heroku_qlsklv26';
+var connectionString = process.env.DATABASE_URL || 'localhost:27017'
+// 'mongodb://backlashUser:password@ds035563.mongolab.com:35563/heroku_qlsklv26';
 
 mongoose.connect(connectionString);
 
@@ -28,7 +29,8 @@ var db = mongoose.connection;
 //define schema for new mongo db
 var voteItemSchema = mongoose.Schema({
     text: String,
-    vote: Number
+    vote: String, 
+    sessionID: String
 });
 
 var VoteItem = mongoose.model('VoteItem', voteItemSchema);
@@ -37,7 +39,7 @@ var VoteItem = mongoose.model('VoteItem', voteItemSchema);
 // Request returns an array with all submitted topics
 app.get('/api/topics', function(req, res){
 
-  VoteItem.find(function(err, records) {
+  VoteItem.find({sessionID: req.query.sessionID}, function(err, records) {
     if (err) return console.error(err);
     console.log('records##########: ',records)
     return res.json(records);    
@@ -54,14 +56,14 @@ app.post('/api/topics', function(req, res){
   var rows = []; // Array to hold values returned from database
 
   // Grab data from http request
-  var data = {text: req.body.text};
-
-  var whatever = new VoteItem({text: data.text, vote: 0});
+  var data = {text: req.body.text, sessionID: req.body.sessionID, votes: '[]'};
+  // console.log('################@$$@%%%%%%%%%%%%#@45', req.body.sessionID);
+  var whatever = new VoteItem(data);
 
   whatever.save(function(err, w) {
     if (err) return console.error(err);
     //query db for all vote items
-    VoteItem.find(function(err, records) {
+    VoteItem.find({sessionID: req.body.sessionID},function(err, records) {
       if (err) return console.error(err);
       console.log('records$$$$$$$$$$$$: ',records)
       return res.json(records);    
@@ -74,7 +76,7 @@ app.post('/api/topics', function(req, res){
 // with a value 0 are not user submitted but actually only used in displaying topics.
 app.get('/api/votes', function(req, res){
 
-  VoteItem.find(function(err, records) {
+  VoteItem.find({sessionID: req.query.sessionID},function(err, records) {
     if (err) return console.error(err);
     return res.json(records);    
   });
@@ -97,7 +99,7 @@ app.post('/api/votes', function(req, res){
       if (err) {
         console.log('error');
       } else {
-        VoteItem.find(function(err, records) {
+        VoteItem.find({sessionID: req.query.sessionID},function(err, records) {
           if (err) return console.error(err);
           return res.json(records);    
         });

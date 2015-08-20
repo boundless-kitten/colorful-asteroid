@@ -28,7 +28,12 @@ var app = angular.module('Reflectiv', ['ngRoute'])
 
         topicsList.init();
         // Retrieve the list of already submitted votes when the topics page is accessed
-        topicsList.topics = $http.get('/api/topics')
+
+        topicsList.topics = $http({
+          url: '/api/topics', 
+          method: "GET",
+          params: {sessionID: Sprint.table}
+        })
           .then(function(response) { // success function
             topicsList.topics = response.data; // stores topics in topicsList
           },
@@ -45,6 +50,7 @@ var app = angular.module('Reflectiv', ['ngRoute'])
           console.log('add the topic: ', topicsList.topicText);
           $http.post('/api/topics', {
             text: topicsList.topicText,
+            sessionID: Sprint.table
           }) // adds topic to database
             .then(function(response) { // success function
               console.log('added the topic: ', topicsList.topicText);
@@ -75,7 +81,11 @@ var app = angular.module('Reflectiv', ['ngRoute'])
 
         votesList.init();
 
-        votesList.topics = $http.get('/api/topics') // gets topics to vote one
+        votesList.topics = $http({
+          url: '/api/topics', 
+          method: "GET",
+          params: {sessionID: Sprint.table}
+        }) // gets topics to vote one
           .then(function(response) { // success function
             votesList.topics = response.data; // sets votesList variable
           },
