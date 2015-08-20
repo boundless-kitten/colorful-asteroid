@@ -3,13 +3,15 @@
 
 // The project uses a node server with express and a Postgres database to store data
 var express = require('express'),
-serveStatic = require('serve-static'),
-pg = require('pg'), 
-morgan = require('morgan'),
-bodyParser = require('body-parser');
+    serveStatic = require('serve-static'),
+    pg = require('pg'),
+    morgan = require('morgan'),
+    bodyParser = require('body-parser');
 var app = express();
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({
+  extended: false
+}));
 
 // Listen for an environment port
 var port = process.env.PORT || 3000;
@@ -22,8 +24,8 @@ app.use(express.static(__dirname + '/public'));
 var connectionString = process.env.DATABASE_URL || 'postgres://localhost:5432/postgres';
 
 // Request returns an array with all submitted topics
-app.get('/api/topics', function(req, res){
-  pg.connect(connectionString, function(err, client, done){
+app.get('/api/topics', function(req, res) {
+  pg.connect(connectionString, function(err, client, done) {
     var query = client.query('SELECT text, vote FROM topics');
     var rows = []; // Array to hold values returned from database
 
@@ -44,14 +46,16 @@ app.get('/api/topics', function(req, res){
 // Posts a submitted topic to the database with a default value of 0 in the vote column
 // These rows with 0 in the vote value are only used to present topics, and not when 
 // querying votes
-app.post('/api/topics', function(req, res){
+app.post('/api/topics', function(req, res) {
   var rows = []; // Array to hold values returned from database
 
   // Grab data from http request
-  var data = {text: req.body.text};
+  var data = {
+    text: req.body.text
+  };
 
   // Connect to DB
-  pg.connect(connectionString, function(err, client, done){
+  pg.connect(connectionString, function(err, client, done) {
 
     // Insert topics into table
     client.query('INSERT INTO topics (text, vote) values ($1, $2)', [data.text, 0]);
@@ -74,8 +78,8 @@ app.post('/api/topics', function(req, res){
 
 // Retrives all topics and votes from database, other than those with a vote value of 0. Votes
 // with a value 0 are not user submitted but actually only used in displaying topics.
-app.get('/api/votes', function(req, res){
-  pg.connect(connectionString, function(err, client, done){
+app.get('/api/votes', function(req, res) {
+  pg.connect(connectionString, function(err, client, done) {
     var query = client.query('SELECT text, vote FROM topics WHERE vote > 0');
     var rows = [];
 
@@ -94,14 +98,17 @@ app.get('/api/votes', function(req, res){
 });
 
 // Post votes to the database 'vote' column as integers ranging from 1 to 100
-app.post('/api/votes', function(req, res){
+app.post('/api/votes', function(req, res) {
   var rows = [];
   var data = [];
 
-  for (var i = 0; i < req.body.length; i++){
-    data[i] = {text: req.body[i].text, vote: req.body[i].vote};
+  for (var i = 0; i < req.body.length; i++) {
+    data[i] = {
+      text: req.body[i].text,
+      vote: req.body[i].vote
+    };
   }
-  pg.connect(connectionString, function(err, client, done){
+  pg.connect(connectionString, function(err, client, done) {
 
     for (var i = 0; i < data.length; i++) {
       client.query('INSERT INTO topics (text, vote) values ($1, $2)', [data[i].text, data[i].vote]);
@@ -121,8 +128,8 @@ app.post('/api/votes', function(req, res){
 });
 
 // Delete all rows from topics table to reset for a new sprint
-app.post('/api/reset', function(req, res){
-  pg.connect(connectionString, function(err, client, done){
+app.post('/api/reset', function(req, res) {
+  pg.connect(connectionString, function(err, client, done) {
     var query = client.query('DELETE from topics');
     res.end();
   });
@@ -131,21 +138,3 @@ app.post('/api/reset', function(req, res){
 
 // Describes the port we're listening on. Go to 'localhost:3000' in browser to serve locally
 var server = app.listen(port);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
