@@ -34,9 +34,6 @@ var voteItemSchema = mongoose.Schema({
 var VoteItem = mongoose.model('VoteItem', voteItemSchema);
 
 
-
-
-
 // Request returns an array with all submitted topics
 app.get('/api/topics', function(req, res){
 
@@ -77,27 +74,10 @@ app.post('/api/topics', function(req, res){
 // with a value 0 are not user submitted but actually only used in displaying topics.
 app.get('/api/votes', function(req, res){
 
-  
   VoteItem.find(function(err, records) {
     if (err) return console.error(err);
-    // console.log('records##########: ',records)
     return res.json(records);    
   });
-
-  
-
-    // var query = client.query('SELECT text, vote FROM topics WHERE vote > 0');
-    // var rows = [];
-
-    // if (err) {
-    //   return console.error('error running query', err);
-    // }
-    // query.on('row', function(row) {
-    //   rows.push(row);
-    // });
-    // query.on('end', function(result) {
-    //   client.end();
- 
 
 });
 
@@ -115,7 +95,7 @@ app.post('/api/votes', function(req, res){
 
   function onInsert(err, docs) {
       if (err) {
-          console.log('error');
+        console.log('error');
       } else {
         VoteItem.find(function(err, records) {
           if (err) return console.error(err);
@@ -128,7 +108,6 @@ app.post('/api/votes', function(req, res){
 
 // Delete all rows from topics table to reset for a new sprint
 app.post('/api/reset', function(req, res){
-
 
     VoteItem.collection.remove();
 
@@ -144,20 +123,4 @@ var server = app.listen(port, function() {
   var host = server.address().address;
   console.log('Strwpll app listening at http://%s:%s -- %s', host, port);
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
