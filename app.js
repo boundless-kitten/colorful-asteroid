@@ -19,8 +19,7 @@ app.use(express.static(__dirname + '/public'));
  
 
 // Connection string for our database
-var connectionString = process.env.DATABASE_URL || 'localhost:27017'
-// 'mongodb://backlashUser:password@ds035563.mongolab.com:35563/heroku_qlsklv26';
+var connectionString = process.env.DATABASE_URL || 'mongodb://backlashUser:password@ds035563.mongolab.com:35563/heroku_qlsklv26';
 
 mongoose.connect(connectionString);
 
