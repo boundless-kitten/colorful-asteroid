@@ -56,7 +56,7 @@ app.post('/api/topics', function(req, res){
   var rows = []; // Array to hold values returned from database
 
   // Grab data from http request
-  var data = {text: req.body.text, sessionID: req.body.sessionID, votes: '[]'};
+  var data = {text: req.body.text, sessionID: req.body.sessionID, vote: '[]'};
   // console.log('################@$$@%%%%%%%%%%%%#@45', req.body.sessionID);
   var whatever = new VoteItem(data);
 
@@ -89,22 +89,48 @@ app.post('/api/votes', function(req, res){
   var rows = [];
   var data = [];
 
+  var sessionID = req.body[0].sessionID;
+
   for (var i = 0; i < req.body.length; i++){
-    data[i] = {text: req.body[i].text, vote: req.body[i].vote};
+    data[i] = {text: req.body[i].text, vote: req.body[i].vote, sessionID: req.body[i].sessionID};
   }
 
-  VoteItem.collection.insert(data, onInsert);
-
-  function onInsert(err, docs) {
-      if (err) {
-        console.log('error');
-      } else {
-        VoteItem.find({sessionID: req.query.sessionID},function(err, records) {
-          if (err) return console.error(err);
-          return res.json(records);    
+  var updateRecord = function() {
+    if(data.length > 0) {
+      var datum = data.shift();
+      VoteItem.findOne({text: datum.text, sessionID: datum.sessionID}, function(err,record) {
+        if (err) return console.error(err);
+        var votes = JSON.parse(record.vote);
+        votes.push(datum.vote);
+        record.vote = JSON.stringify(votes);
+        record.save(function() {
+          updateRecord();
         });
-      }
-  }
+      })
+    } else {
+      VoteItem.find({sessionID: sessionID},function(err, records) {
+        if (err) return console.error(err);
+        return res.json(records);    
+      });
+    }
+  };
+
+  updateRecord();
+
+  // VoteItem.collection.insert(data, onInsert);
+
+  // function onInsert(err, docs) {
+  //     if (err) {
+  //       console.log('error');
+  //     } else {
+  //       VoteItem.find({sessionID: req.query.sessionID},function(err, records) {
+  //         if (err) return console.error(err);
+  //         return res.json(records);    
+  //       });
+  //     }
+  // }
+
+
 
 });
 
