@@ -28,7 +28,12 @@ var app = angular.module('Reflectiv', ['ngRoute'])
 
         topicsList.init();
         // Retrieve the list of already submitted votes when the topics page is accessed
-        topicsList.topics = $http.get('/api/topics')
+
+        topicsList.topics = $http({
+          url: '/api/topics', 
+          method: "GET",
+          params: {sessionID: Sprint.table}
+        })
           .then(function(response) { // success function
             topicsList.topics = response.data; // stores topics in topicsList
           },
@@ -45,6 +50,7 @@ var app = angular.module('Reflectiv', ['ngRoute'])
           console.log('add the topic: ', topicsList.topicText);
           $http.post('/api/topics', {
             text: topicsList.topicText,
+            sessionID: Sprint.table
           }) // adds topic to database
             .then(function(response) { // success function
               console.log('added the topic: ', topicsList.topicText);
@@ -75,7 +81,11 @@ var app = angular.module('Reflectiv', ['ngRoute'])
 
         votesList.init();
 
-        votesList.topics = $http.get('/api/topics') // gets topics to vote one
+        votesList.topics = $http({
+          url: '/api/topics', 
+          method: "GET",
+          params: {sessionID: Sprint.table}
+        }) // gets topics to vote one
           .then(function(response) { // success function
             votesList.topics = response.data; // sets votesList variable
           },
@@ -112,16 +122,18 @@ var app = angular.module('Reflectiv', ['ngRoute'])
 
 
         // Retrieve the list of already submitted votes when the topics page is accessed
-        resultsList.results = $http.get('/api/votes')
+        resultsList.results = $http({
+          url: '/api/topics', 
+          method: "GET",
+          params: {sessionID: Sprint.table}
+        })
           .then(function(response) { // success function
             resultsList.results = response.data; // store results in resultsList.results
             console.log(response.data);
             for (var i = 0; i < resultsList.results.length; i++) { // iterate over results to compile votes
-              if (resultsList.obj[resultsList.results[i].text]) { // if vote exists
-                resultsList.obj[resultsList.results[i].text].push(resultsList.results[i].vote); // push new vote onto votes array
-              } else {
-                resultsList.obj[resultsList.results[i].text] = [resultsList.results[i].vote]; // store the first vote in new array
-              }
+  
+                resultsList.obj[resultsList.results[i].text] = JSON.parse(resultsList.results[i].vote); // push new vote onto votes array
+             
             }
             // for (var arr in resultsList.obj) { // iterate over object storing vote arrays
             //   var sum = resultsList.obj[arr].reduce(function(a, b) {
