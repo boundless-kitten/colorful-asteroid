@@ -2,6 +2,13 @@
 <div>
   <div class="pageTitle">
     <h2>HOW DID THAT MAKE YOU FEEL?</h2>
+    
+      <img src="assets/brey_1.png" width="100" class="albrey">
+      <img src="assets/brey_2.png" width="100" class="albrey">
+      <img src="assets/brey_3.png" width="100" class="albrey">
+      <img src="assets/brey_4.png" width="100" class="albrey">
+      <img src="assets/brey_5.png" width="100" class="albrey">
+   
   </div>
   <!-- Controller for voting -->
   <center ng-controller="VotesController as votesList">
@@ -12,7 +19,7 @@
           {{ item.text }}
           <div></div>
           <!-- The slider for posting your vote, from 1 to 100 -->
-          <input ng-model="item.vote" type="range" min="1" max="5" step="1" name="dislike/like" />
+          <input style="width:60%" ng-model="item.vote" type="range" min="1" max="5" step="1" name="dislike/like" />
         </li>
       </ul>
       <div style="width:520px; margin: 0 auto;">
