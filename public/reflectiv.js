@@ -1,4 +1,4 @@
-var app = angular.module('Reflectiv', ['ngRoute'])
+var app = angular.module('Backlash', ['ngRoute'])
       .service('Sprint', function() {
         return {}; // object to store persistant info
       })
@@ -64,7 +64,7 @@ var app = angular.module('Reflectiv', ['ngRoute'])
           topicsList.topicText = ''; // clears input field
         };
 
-        topicsList.sprintUrl = 'http://reflectiv.guru/topic/' + Sprint.table + '/'; // sets sharable url
+        topicsList.sprintUrl = 'http://backlash.herokuapp.com/#/topic/' + Sprint.table + '/'; // sets sharable url
 
         topicsList.startVote = function() {
           $location.path('/topic/' + Sprint.table + '/vote'); // navigates to vote view
@@ -163,3 +163,9 @@ var app = angular.module('Reflectiv', ['ngRoute'])
 
         };
       });
+
+app.filter('reverse', function() {
+  return function(items) {
+    return items.slice().reverse();
+  };
+});

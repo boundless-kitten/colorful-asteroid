@@ -38,12 +38,10 @@ app.directive('clusterPlot', function( /* dependencies */ ) {
 
       function tick(e) {
         if(circle){
-          // console.log('@#%%$^&####%^#$^%#$^%$#', circle);
           circle
             .each(gravity(.2 * e.alpha))
             .each(collide(.5))
             .attr("cx", function(d) {
-              //console.log('bruhbruhbruhbruhbruhbruhbruh', d);
               return d.x;
             })
             .attr("cy", function(d) {
@@ -108,14 +106,12 @@ app.directive('clusterPlot', function( /* dependencies */ ) {
             color: colorArr[r-1],
             cx: x(r-1),
             cy: height / 2
-            //id: new Date().getTime()
           });
         });
         
-        circle = circle.data(force.nodes());//, function(d) { return d.id;});
+        circle = circle.data(force.nodes());
         circle
           .enter().append("circle")
-          //.attr("class", function(d) { return "node " + d.id; })
           .attr("r", function(d) {
             return d.radius;
           })
@@ -123,7 +119,6 @@ app.directive('clusterPlot', function( /* dependencies */ ) {
             return d.color;
           })
           .call(force.drag);
-        //circle.exit().remove();
 
         force.start();
 

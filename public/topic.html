@@ -8,17 +8,17 @@
   <!-- The form to enter topics -->
   <form ng-submit="topicsList.addTopic()" class="topicForm"> 
     <input type="text" required ng-model="topicsList.topicText"  class="textInput" placeholder="Enter a topic">
-    <div></div>
     <!-- Click to post a topic -->
-    <input style="visibility: hidden;" class="btn-primary" type="submit" value="add">
+    <input class="btn-primary" type="submit" value="Submit Topic">
+    <div></div>
   </form>
     
   <ul>
-   <li ng-repeat="topic in topicsList.topics">
+   <li ng-repeat="topic in topicsList.topics | reverse">
      {{topic.text}} 
     </li>
   </ul>
-  <div class="cta" ng-click="topicsList.startVote()">VOTE!</div>
+  <div class="cta" ng-click="topicsList.startVote()">GO VOTE!</div>
 </div>
   
 
