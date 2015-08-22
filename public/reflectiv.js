@@ -17,12 +17,13 @@ var app = angular.module('Reflectiv', ['ngRoute'])
             templateUrl: 'results.html' // serves results view
           });
       }])
-      .controller('TopicsController', function($location, $http, Sprint) { // injects location, http, sprint
+      .controller('TopicsController', function($location, $http, Sprint, $routeParams) { // injects location, http, sprint
         var topicsList = this; // sets scope to topicsList
 
+        console.log('##################', $routeParams);
         topicsList.init = function() {
           if (Sprint.table === undefined) {
-            Sprint.table = $location.path().substring(7);
+            Sprint.table = $routeParams.id;
           }
         };
 
