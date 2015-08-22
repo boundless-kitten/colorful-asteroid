@@ -130,7 +130,6 @@ app.post('/api/votes', function(req, res){
   // }
 
 
-
 });
 
 // Delete all rows from topics table to reset for a new sprint

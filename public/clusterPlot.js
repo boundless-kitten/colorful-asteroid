@@ -8,65 +8,37 @@ app.directive('clusterPlot', function( /* dependencies */ ) {
       result: '@result'
     },
     link: function(scope, element, attrs) {
+
       var width = 500,
           height = 150,
           padding = 30, // separation between nodes
           maxRadius = 100;
 
-      var n = 15, // total number of nodes
-          m = 5; // number of distinct clusters
-
-      var color = d3.scale.category20b()
-            .domain(d3.range(m));
+      var m = 5; // number of distinct clusters
 
       var x = d3.scale.ordinal()
             .domain(d3.range(m))
             .rangePoints([0, width], 1);
 
-      var res = JSON.parse(scope.result);
-      var nodes = res.map(function(r) {
-        var colorArr = ["#FF5044", " #E89040", "#FFD536", "#C0E842", "#4BFF6B"];
-        return {
-          radius: 8,
-          color: colorArr[r-1], //color(i),
-          cx: x(r-1),
-          cy: height / 2
-        };
-      });
-
-      var force = d3.layout.force()
-            .nodes(nodes)
-            .size([width, height])
-            .gravity(0)
-            .charge(0)
-            .on("tick", tick)
-            .start();
-
       var svg = d3.select(element[0]).append("svg")
             .attr("width", width)
             .attr("height", height);
 
-      var circle = svg.selectAll("circle")
-            .data(nodes)
-            .enter().append("circle")
-            .attr("r", function(d) {
-              return d.radius;
-            })
-            .style("fill", function(d) {
-              return d.color;
-            })
-            .call(force.drag);
+      var nodes;
+      var circle;
 
       function tick(e) {
-        circle
-          .each(gravity(.2 * e.alpha))
-          .each(collide(.5))
-          .attr("cx", function(d) {
-            return d.x;
-          })
-          .attr("cy", function(d) {
-            return d.y;
-          });
+        if(circle){
+          circle
+            .each(gravity(.2 * e.alpha))
+            .each(collide(.5))
+            .attr("cx", function(d) {
+              return d.x;
+            })
+            .attr("cy", function(d) {
+              return d.y;
+            });
+        }
       }
 
       // Move nodes toward cluster focus.
@@ -104,8 +76,40 @@ app.directive('clusterPlot', function( /* dependencies */ ) {
           });
         };
       }
-      scope.$watch('exp', function(newVal, oldVal) {
-        // ...
+
+      scope.$watch('result', function(newVal, oldVal) {
+        
+        var res = JSON.parse(newVal);
+        
+        nodes = res.map(function(r) {
+          var colorArr = ["#FF5044", " #E89040", "#FFD536", "#C0E842", "#4BFF6B"];
+          return {
+            radius: 8,
+            color: colorArr[r-1], //color(i),
+            cx: x(r-1),
+            cy: height / 2
+          };
+        });
+
+        var force = d3.layout.force()
+              .nodes(nodes)
+              .size([width, height])
+              .gravity(0)
+              .charge(0)
+              .on("tick", tick)
+              .start();
+
+        circle = svg.selectAll("circle")
+              .data(nodes)
+              .enter().append("circle")
+              .attr("r", function(d) {
+                return d.radius;
+              })
+              .style("fill", function(d) {
+                return d.color;
+              })
+              .call(force.drag);
+
       });
     }
   };

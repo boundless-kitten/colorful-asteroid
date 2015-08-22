@@ -97,6 +97,7 @@ var app = angular.module('Reflectiv', ['ngRoute'])
           $http.post('/api/votes', votesList.topics) // post vote to db
             .then(function(response) { // success function
               console.log('Vote submitted');
+              votesList.viewResults();
             },
                   function(response) { // error function
                     console.log('you have an error in your voting');
@@ -121,41 +122,40 @@ var app = angular.module('Reflectiv', ['ngRoute'])
         resultsList.init();
 
 
-        // Retrieve the list of already submitted votes when the topics page is accessed
-        resultsList.results = $http({
+        var updateResultsList = function() {
+          $http({
           url: '/api/topics', 
           method: "GET",
           params: {sessionID: Sprint.table}
         })
           .then(function(response) { // success function
             resultsList.results = response.data; // store results in resultsList.results
-            console.log(response.data);
+            console.log('####################################');
             for (var i = 0; i < resultsList.results.length; i++) { // iterate over results to compile votes
   
                 resultsList.obj[resultsList.results[i].text] = JSON.parse(resultsList.results[i].vote); // push new vote onto votes array
              
             }
-            // for (var arr in resultsList.obj) { // iterate over object storing vote arrays
-            //   var sum = resultsList.obj[arr].reduce(function(a, b) {
-            //     return a + b;
-            //   }); // reduce arrays to get average
-            //   resultsList.obj[arr] = (sum / resultsList.obj[arr].length).toFixed(1);
-            // }
+           setTimeout(updateResultsList, 3000);
           },
                 function(response) { // error function
                   console.log('you have an error');
                 });
+        };
+
+        updateResultsList();
 
         resultsList.restart = function() {
 
           // Http request to url that will delete all rows in database for a new sprint
-          $http.post('/api/reset', {})
-            .then(function(response) { // success function
-              console.log('Reset for new sprint');
-            },
-                  function(response) { // error function
-                    console.log('you have an error in your voting');
-                  });
+
+          // $http.post('/api/reset', {})
+          //   .then(function(response) { // success function
+          //     console.log('Reset for new sprint');
+          //   },
+          //         function(response) { // error function
+          //           console.log('you have an error in your voting');
+          //         });
 
           $location.path('/'); // restart
 
