@@ -16,18 +16,14 @@ cluster-plot {
   margin-right: 0px;
 }
 
+
 .top-bar {
   font-size: 60px;
   background: #2D8792;
-  /*border: 1px solid #979797;*/
   margin-bottom: 10px;
-  /*padding: 10%;*/
   border-radius: 20px;
 }
-/*img {
-  width: 50%;
-  height: 50%;
-}*/
+
 body {
   font-family: "AvenirNext-Regular";
   background-color: #D6F6FA;
@@ -42,8 +38,10 @@ input[type='text'] {
   text-align: center;
   font-weight: 90;
   font-size: 50px;
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
   border-top-style: none;
   border-right-style: none;
   border-bottom-style: solid;
@@ -79,17 +77,8 @@ input[type='text'] {
 .cta:hover {
   background-color: #75A8F3;
 }
-li {
-/*  list-style: none;
-  width: 500px;
-  margin: 20px auto;
-  text-align: center;
-  background-color: white;
-  font-size: 25px;
-  padding: 10px;
-  border-radius: 30px;
-*/  
-font-family: AvenirNext-Regular;
+li { 
+  font-family: AvenirNext-Regular;
   font-size: 36px;
   color: #F6E2FD;
   line-height: 49px;
@@ -98,9 +87,7 @@ ul {
   border-radius: 20px;
   padding: 0;
   background-color: #3C666C;
-/*  border: 1px solid #979797;
-  border: 1px solid #050404;*/
-  box-shadow: 0px 2px 4px 0px rgba(0,0,0,0.50), inset 0px 1px 3px 0px rgba(0,0,0,0.50;
+  box-shadow: 0px 2px 4px 0px rgba(0,0,0,0.50), inset 0px 1px 3px 0px rgba(0,0,0,0.50);
 
 }
 .pageTitle {
@@ -111,14 +98,7 @@ ul {
   float: right;
 }
 input[type='range'] {
-  width: 250px;
-  -webkit-appearance: none;
-  padding-left: 2px;
-  padding-right: 2px;
-  -webkit-border-radius: 5px;
-  background-image: -webkit-linear-gradient(left, lightcoral, lightgreen);
-  border-radius: 0;
-  font-family: AvenirNext-Regular;
+
 }
 .btn-primary {
   display: hidden;

@@ -63,7 +63,7 @@ var app = angular.module('Reflectiv', ['ngRoute'])
           topicsList.topicText = ''; // clears input field
         };
 
-        topicsList.sprintUrl = 'http://reflectiv.guru/topic/' + Sprint.table + '/'; // sets sharable url
+        topicsList.sprintUrl = 'http://backlash.heroku/#/topic/' + Sprint.table ; // sets sharable url
 
         topicsList.startVote = function() {
           $location.path('/topic/' + Sprint.table + '/vote'); // navigates to vote view
