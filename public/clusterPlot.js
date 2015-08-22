@@ -10,8 +10,8 @@ app.directive('clusterPlot', function( /* dependencies */ ) {
     link: function(scope, element, attrs) {
 
       var colorArr = ["#FF5044", " #E89040", "#FFD536", "#C0E842", "#4BFF6B"];
-      var width = 500,
-          height = 150,
+      var width = 750,
+          height = 50,
           padding = 30, // separation between nodes
           maxRadius = 100;
 
