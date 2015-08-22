@@ -9,6 +9,7 @@ app.directive('clusterPlot', function( /* dependencies */ ) {
     },
     link: function(scope, element, attrs) {
 
+      var colorArr = ["#FF5044", " #E89040", "#FFD536", "#C0E842", "#4BFF6B"];
       var width = 500,
           height = 150,
           padding = 30, // separation between nodes
@@ -20,19 +21,29 @@ app.directive('clusterPlot', function( /* dependencies */ ) {
             .domain(d3.range(m))
             .rangePoints([0, width], 1);
 
+      var nodes = [];
+      
+      var force = d3.layout.force()
+              .nodes(nodes)
+              .size([width, height])
+              .gravity(0)
+              .charge(0)
+              .on("tick", tick);
+              
       var svg = d3.select(element[0]).append("svg")
             .attr("width", width)
             .attr("height", height);
 
-      var nodes;
-      var circle;
+      var circle = svg.selectAll("circle");
 
       function tick(e) {
         if(circle){
+          // console.log('@#%%$^&####%^#$^%#$^%$#', circle);
           circle
             .each(gravity(.2 * e.alpha))
             .each(collide(.5))
             .attr("cx", function(d) {
+              //console.log('bruhbruhbruhbruhbruhbruhbruh', d);
               return d.x;
             })
             .attr("cy", function(d) {
@@ -77,38 +88,44 @@ app.directive('clusterPlot', function( /* dependencies */ ) {
         };
       }
 
+      // WATCH
+
       scope.$watch('result', function(newVal, oldVal) {
         
-        var res = JSON.parse(newVal);
-        
-        nodes = res.map(function(r) {
-          var colorArr = ["#FF5044", " #E89040", "#FFD536", "#C0E842", "#4BFF6B"];
-          return {
+        var resNew = JSON.parse(newVal);
+        var resOld = JSON.parse(oldVal);
+        var res;
+
+        if(nodes.length === 0){
+          res = resNew;
+        }else{
+          res = resNew.splice(- (resNew.length - resOld.length));
+        }
+
+        res.forEach(function(r) {
+          nodes.push({
             radius: 8,
-            color: colorArr[r-1], //color(i),
+            color: colorArr[r-1],
             cx: x(r-1),
             cy: height / 2
-          };
+            //id: new Date().getTime()
+          });
         });
+        
+        circle = circle.data(force.nodes());//, function(d) { return d.id;});
+        circle
+          .enter().append("circle")
+          //.attr("class", function(d) { return "node " + d.id; })
+          .attr("r", function(d) {
+            return d.radius;
+          })
+          .style("fill", function(d) {
+            return d.color;
+          })
+          .call(force.drag);
+        //circle.exit().remove();
 
-        var force = d3.layout.force()
-              .nodes(nodes)
-              .size([width, height])
-              .gravity(0)
-              .charge(0)
-              .on("tick", tick)
-              .start();
-
-        circle = svg.selectAll("circle")
-              .data(nodes)
-              .enter().append("circle")
-              .attr("r", function(d) {
-                return d.radius;
-              })
-              .style("fill", function(d) {
-                return d.color;
-              })
-              .call(force.drag);
+        force.start();
 
       });
     }
