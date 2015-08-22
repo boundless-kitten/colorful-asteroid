@@ -40,7 +40,7 @@ app.get('/api/topics', function(req, res){
 
   VoteItem.find({sessionID: req.query.sessionID}, function(err, records) {
     if (err) return console.error(err);
-    console.log('records##########: ',records)
+    // console.log('records##########: ',records)
     return res.json(records);    
   });
 
