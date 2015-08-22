@@ -4,7 +4,8 @@
   "description": "Sprint Reflection Tool",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "npm run test-server",
+    "test-server": "mocha -R spec ./spec/serverSpec.js"
   },
   "repository": {
     "type": "git",
