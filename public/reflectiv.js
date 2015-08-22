@@ -97,6 +97,7 @@ var app = angular.module('Reflectiv', ['ngRoute'])
           $http.post('/api/votes', votesList.topics) // post vote to db
             .then(function(response) { // success function
               console.log('Vote submitted');
+              votesList.viewResults();
             },
                   function(response) { // error function
                     console.log('you have an error in your voting');
