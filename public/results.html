@@ -3,16 +3,23 @@
 <div ng-controller="ResultsController as resultsList">
   <div class="pageTitle">
     <h2>DISCUSS YOUR FEELS</h2>
+
+      <img src="assets/brey_1.png" width="100" class="albrey">
+      <img src="assets/brey_2.png" width="100" class="albrey">
+      <img src="assets/brey_3.png" width="100" class="albrey">
+      <img src="assets/brey_4.png" width="100" class="albrey">
+      <img src="assets/brey_5.png" width="100" class="albrey">
+   
   </div>
   <ul>
     <!-- For each topic, dislpay a list item of the topic ('key') and the results ('results') of voting -->
     <li ng-repeat=" ( key,result) in resultsList.obj">
       <!-- <ng-include src="'script.html'"></ng-include> -->
-      <cluster-plot ng-attr-key="{{key}}" ng-attr-result="{{result}}"></cluster-plot>
+      <cluster-plot ng-attr-key="{{key}}" ng-attr-result="{{result}}" ></cluster-plot>
       <div ng-class="result >= 70 ? 'good' : (result <= 40 ? 'bad' : 'meh')">
-        <!-- <div class="animationDiv"> -->
-        <!--   {{key}} : {{result}} -->
-        <!-- </div> -->
+        <div class="animationDiv">
+          {{key}}
+        </div>
       </div>
     </li>
   </ul>

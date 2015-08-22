@@ -10,6 +10,12 @@
   margin-left: 5%;
 }
 
+cluster-plot {
+  position: float;
+  width: 100%;
+  margin-right: 0px;
+}
+
 .top-bar {
   font-size: 60px;
   background: #2D8792;
@@ -81,8 +87,9 @@ li {
   background-color: white;
   font-size: 25px;
   padding: 10px;
-  border-radius: 30px;*/
-  font-family: AvenirNext-Regular;
+  border-radius: 30px;
+*/  
+font-family: AvenirNext-Regular;
   font-size: 36px;
   color: #F6E2FD;
   line-height: 49px;
