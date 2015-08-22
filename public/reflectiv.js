@@ -87,7 +87,7 @@ var app = angular.module('Reflectiv', ['ngRoute'])
           params: {sessionID: Sprint.table}
         }) // gets topics to vote one
           .then(function(response) { // success function
-            votesList.topics = response.data; // sets votesList variable
+            votesList.topics = response.data.map(function(item) { return {text: item.text, vote: 3} }); // sets votesList variable
           },
                 function(response) { // error function
                   console.log('you have an error');
