@@ -6,9 +6,28 @@
 
 }
 
-.albrey {
-  margin-left: 5%;
+.span2 {
+  margin-left: 15%;
+  margin-right: 15%;
+  display: flex;
+  justify-content: space-between;
 }
+
+.albrey {
+    height: auto; 
+    width: auto; 
+    max-width: 200px; 
+    max-height: 200px;
+}
+
+img {
+  border: 0 none;
+  display: inline-block;
+  height: auto;
+  max-width: 100%;
+  vertical-align: middle;
+}
+
 
 cluster-plot {
   position: float;
@@ -97,9 +116,7 @@ ul {
 .about {
   float: right;
 }
-input[type='range'] {
 
-}
 .btn-primary {
   display: hidden;
 }

@@ -2,14 +2,57 @@
 <div>
   <div class="pageTitle">
     <h2>HOW DID THAT MAKE YOU FEEL?</h2>
-    
-      <img src="assets/brey_1.png" width="100" class="albrey">
-      <img src="assets/brey_2.png" width="100" class="albrey">
-      <img src="assets/brey_3.png" width="100" class="albrey">
-      <img src="assets/brey_4.png" width="100" class="albrey">
-      <img src="assets/brey_5.png" width="100" class="albrey">
-   
-  </div>
+
+    <!-- jQuery rumble animations -->
+    <script>
+      $('#a1').jrumble({
+        x: 10,
+        y: 10,
+        rotation: .1
+      });
+
+      $('#a2').jrumble({
+        x: 3,
+        y: 3,
+        rotation: 1
+      });
+
+      $('#a3').jrumble({
+        speed: 50
+      });
+
+      $('#a4').jrumble({
+        speed: 75
+      });
+
+      $('#a5').jrumble({
+        x: 30,
+        y: 30,
+        speed: 200
+      });
+
+      $('.albrey').hover(function(){
+        $(this).trigger('startRumble');
+      }, function(){
+        $(this).trigger('stopRumble');
+      });
+    </script>
+
+
+    <div class="span2">
+      <img src="assets/brey_1.png" id="a1" class="albrey">
+
+      <img src="assets/brey_2.png" id="a2" class="albrey">
+
+      <img src="assets/brey_3.png" id="a3" class="albrey">
+
+      <img src="assets/brey_4.png" id="a4" class="albrey">
+      <img src="assets/brey_5.png" id="a5" class="albrey">
+    </div> 
+  </div> 
+
+
+
   <!-- Controller for voting -->
   <center ng-controller="VotesController as votesList">
     <form>
