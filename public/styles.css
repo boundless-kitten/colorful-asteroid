@@ -120,6 +120,21 @@ ul {
 .btn-primary {
   display: hidden;
 }
+
+.btn-submit {
+  width: 150px;
+  height: 60px;
+  background-color: grey;
+  text-align: center;
+  font-size: 20px;
+  cursor: pointer;
+  border-radius: 30px;
+  padding-bottom: 0px;
+  padding-top: 10px;
+  line-height: 25px;
+}
+
+
 .good {
   color: green;
   background-color: #333333;

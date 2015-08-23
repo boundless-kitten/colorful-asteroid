@@ -7,10 +7,12 @@
   </div>
   <!-- The form to enter topics -->
   <form ng-submit="topicsList.addTopic()" class="topicForm"> 
-    <input type="text" required ng-model="topicsList.topicText"  class="textInput" placeholder="Enter a topic">
-    <!-- Click to post a topic -->
-    <input class="btn-primary" type="submit" value="Submit Topic">
-    <div></div>
+    
+    <div class="align" style="display:inline-block">
+      <input type="text" required ng-model="topicsList.topicText"  class="textInput" placeholder="Enter a topic">
+      <!-- Click to post a topic -->
+      <input class="btn-submit" type="submit" value="Submit Topic">
+    </div>
   </form>
     
   <ul>
