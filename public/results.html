@@ -54,12 +54,12 @@
     <!-- For each topic, dislpay a list item of the topic ('key') and the results ('results') of voting -->
     <li ng-repeat=" ( key,result) in resultsList.obj">
       <!-- <ng-include src="'script.html'"></ng-include> -->
-      <cluster-plot ng-attr-key="{{key}}" ng-attr-result="{{result}}" ></cluster-plot>
-      <div ng-class="result >= 70 ? 'good' : (result <= 40 ? 'bad' : 'meh')">
+      <div>
         <div class="animationDiv">
           {{key}}
         </div>
       </div>
+      <cluster-plot ng-attr-key="{{key}}" ng-attr-result="{{result}}" ></cluster-plot>
     </li>
   </ul>
   <!-- Return to the start page and start a new sprint
