@@ -35,6 +35,10 @@ cluster-plot {
   margin-right: 0px;
 }
 
+cluster-plot > svg {
+  overflow: overlay;
+}
+
 
 .top-bar {
   font-size: 60px;
