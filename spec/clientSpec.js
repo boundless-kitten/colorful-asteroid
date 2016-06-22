@@ -20,13 +20,13 @@ beforeEach(inject(function($injector) {
 }));
 
 
-afterEach(function() {
+// afterEach(function() {
 
-})
+// })
 
-it('should have a location', function() {
-  expect($location).to.be.a('string');
-});
+// it('should have a location', function() {
+//   expect($location).to.be.a('string');
+// });
 
 
 
